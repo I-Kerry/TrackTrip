@@ -27,12 +27,6 @@ final class AllStationsService: AllStationsProtocol {
         
         let fullData = try await Data(collecting: responseBody, upTo: limit)
         
-//        var fullData = Data()
-        
-//        for try await chunk in try response.ok.body.html {
-//            fullData.append(contentsOf: chunk)
-//        }
-        
         let allStation = try JSONDecoder().decode(AllStations.self, from: fullData)
         return allStation
     }
