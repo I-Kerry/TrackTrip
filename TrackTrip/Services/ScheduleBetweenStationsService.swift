@@ -1,6 +1,28 @@
 
-import Foundation
+import OpenAPIRuntime
+import OpenAPIURLSession
 
-final class ScheduleBetweenStationsService {
+typealias ScheduleBetweenStations = Components.Schemas.Segments
+
+protocol ScheduleBetweenStationsProtocol {
+    func getSchedualBetweenStations(from: String, to: String) async throws -> ScheduleBetweenStations
+}
+
+final class ScheduleBetweenStationsService: ScheduleBetweenStationsProtocol {
     
+    private let apiKey: String
+    private let client: Client
+    
+    init(apiKey: String, client: Client) {
+        self.apiKey = apiKey
+        self.client = client
+    }
+    
+    func getSchedualBetweenStations(from: String, to: String) async throws -> ScheduleBetweenStations {
+        let response = try await client.getSchedualBetweenStations(query: .init(
+            apikey: apiKey,
+            from: from,
+            to: to))
+        return try response.ok.body.json
+    }
 }
