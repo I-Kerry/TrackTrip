@@ -8,15 +8,8 @@ protocol ScheduleAtStationProtocol {
     func getStationSchedule(station: String) async throws -> ScheduleAtStation
 }
 
-final class ScheduleAtStationService: ScheduleAtStationProtocol {
-    private let client: Client
-    private let apiKey: String
-    
-    init(client: Client, apiKey: String) {
-        self.client = client
-        self.apiKey = apiKey
-    }
-    
+final class ScheduleAtStationService: BaseService, ScheduleAtStationProtocol {
+
     func getStationSchedule(station: String) async throws -> ScheduleAtStation {
         let response = try await client.getStationSchedule(query: .init(
             apikey: apiKey,

@@ -8,16 +8,8 @@ protocol CarrierProtocol {
     func getCarrierInfo(code: String) async throws -> Carrier
 }
 
-final class CarrierService: CarrierProtocol {
-    
-    private let apiKey: String
-    private let client: Client
-    
-    init(apiKey: String, client: Client) {
-        self.apiKey = apiKey
-        self.client = client
-    }
-    
+final class CarrierService: BaseService, CarrierProtocol {
+
     func getCarrierInfo(code: String) async throws -> Carrier {
         let response = try await client.getCarrierInfo(query: .init(
             apikey: apiKey,

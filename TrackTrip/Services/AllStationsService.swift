@@ -9,14 +9,7 @@ protocol AllStationsProtocol {
     func getAllStations() async throws -> AllStations
 }
 
-final class AllStationsService: AllStationsProtocol {
-    private let apiKey: String
-    private let client: Client
-    
-    init(apiKey: String, client: Client) {
-        self.apiKey = apiKey
-        self.client = client
-    }
+final class AllStationsService: BaseService, AllStationsProtocol {
     
     func getAllStations() async throws -> AllStations {
         let response = try await client.getAllStations(query: .init(apikey: apiKey))

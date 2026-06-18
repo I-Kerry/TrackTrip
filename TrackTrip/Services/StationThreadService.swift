@@ -8,15 +8,7 @@ protocol StationThreadProtocol {
     func getRouteStations(uid: String) async throws -> StationThread
 }
 
-final class StationThreadService: StationThreadProtocol {
-    
-    private let apiKey: String
-    private let client: Client
-    
-    init(apiKey: String, client: Client) {
-        self.apiKey = apiKey
-        self.client = client
-    }
+final class StationThreadService: BaseService, StationThreadProtocol {
     
     func getRouteStations(uid: String) async throws -> StationThread {
         let response = try await client.getRouteStations(query: .init(
