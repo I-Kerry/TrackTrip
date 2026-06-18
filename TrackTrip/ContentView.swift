@@ -11,53 +11,37 @@ struct ContentView: View {
         }
         .padding()
         .onAppear {
-//            testFetchStations()
-//            testFetchCopyright()
+            testFetchStations()
         }
     }
     
-//    func testFetchStations() {
-//        Task {
-//            do {
-//                let client = Client(
-//                    serverURL: try Servers.Server1.url(),
-//                    transport: URLSessionTransport())
-//                
-//                let service = NearestStationsService(
-//                    client: client,
-//                    apiKey: "2fe73353-93c8-4a53-abc8-8db270c4bf8a")
-//                
-//                print("Fetching stations...")
-//                let stations = try await service.getNearestStations(
-//                    lat: 59.864177,
-//                    lng: 30.319163,
-//                    distance: 50)
-//                print("Successfully fetched stations: \(stations)")
-//            } catch {
-//                print("Error fetching stations: \(error)")
-//            }
-//        }
-//    }
+//    MARK: testFetchStations
     
-//    func testFetchCopyright() {
-//        Task {
-//            do {
-//                let client = Client(
-//                    serverURL: try Servers.Server1.url(),
-//                    transport: URLSessionTransport())
-//                
-//                let server = CopyrightService(
-//                    client: client,
-//                    apiKey: "2fe73353-93c8-4a53-abc8-8db270c4bf8a")
-//                
-//                print("Fetching stations...")
-//                let copyright = try await server.getCopyright()
-//                print("Successfully fetched stations: \(copyright)")
-//            } catch {
-//                print("Error fetching stations: \(error)")
-//            }
-//        }
-//    }
+    func testFetchStations() {
+        Task {
+            do {
+                let manager = try YandexScheduleManager(apiKey: ApiKey.apikey)
+                let stations = try await manager.testFetchStations()
+                let copyright = try await manager.testFetchCopyright()
+                let allStations = try await manager.testFetchAllStation()
+                let nearestCity = try await manager.testNearestCity()
+                let carrier = try await manager.testCarrier()
+                let scheduleAtStation = try await manager.testScheduleAtStation()
+                let scheduleBetweenStations = try await manager.testScheduleBetweenStations()
+                let thread = try await manager.testThread()
+                print("Successfully fetched Thread: \(thread)")
+                print("Successfully fetched ScheduleBetweenStations: \(scheduleBetweenStations)")
+                print("Successfully fetched ScheduleAtStation: \(scheduleAtStation)")
+                print("Successfully fetched Carrier: \(carrier)")
+                print("Successfully fetched NearestCity: \(nearestCity)")
+                print("Successfully fetched allStations: \(allStations)")
+                print("Successfully fetched NearestStations: \(stations)")
+                print("Successfully fetched copyright: \(copyright)")
+            } catch {
+                print("Error fetching stations: \(error)")
+            }
+        }
+    }
 }
 
 #Preview {

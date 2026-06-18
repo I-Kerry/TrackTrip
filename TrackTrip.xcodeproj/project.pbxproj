@@ -15,9 +15,33 @@
 		35030D8F2FD8498C00B5C2B0 /* TrackTrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackTrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		35030E392FE0596500B5C2B0 /* Exceptions for "TrackTrip" folder in "TrackTrip" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				.gitignore,
+			);
+			target = 35030D8E2FD8498C00B5C2B0 /* TrackTrip */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		35030E3A2FE0596500B5C2B0 /* Exceptions for "TrackTrip" folder in "Compile Sources" phase from "TrackTrip" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 35030D8B2FD8498C00B5C2B0 /* Sources */;
+			membershipExceptions = (
+				.gitignore,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		35030D912FD8498C00B5C2B0 /* TrackTrip */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				35030E392FE0596500B5C2B0 /* Exceptions for "TrackTrip" folder in "TrackTrip" target */,
+				35030E3A2FE0596500B5C2B0 /* Exceptions for "TrackTrip" folder in "Compile Sources" phase from "TrackTrip" target */,
+			);
 			path = TrackTrip;
 			sourceTree = "<group>";
 		};
