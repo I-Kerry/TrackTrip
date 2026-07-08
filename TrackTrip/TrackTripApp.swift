@@ -5,7 +5,7 @@ import SwiftUI
 struct TrackTripApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainScreen()
         }
     }
 }
