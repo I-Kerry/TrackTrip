@@ -8,6 +8,10 @@ final class ViewModel: ObservableObject {
     
     @Published var path: [Route] = []
     
+    init() {
+        print("MainScreenViewModel init", ObjectIdentifier(self))
+    }
+    
     var isSearchShown: Bool {
         !fromCity.isEmpty && !toCity.isEmpty
     }
@@ -26,21 +30,27 @@ final class ViewModel: ObservableObject {
         path.append(.citySelection(field: .to))
     }
     
-    func didSelectCity(_ city: String, for field: CityField) {
+    func didSelectCity(for field: CityField,_ city: City) {
         switch field {
         case .from:
-            fromCity = city
+            fromCity = city.name
         case .to:
-            toCity = city
+            toCity = city.name
         }
-        if !path.isEmpty {
-            path.removeLast()
-        }
+//        if !path.isEmpty {
+//            path.removeLast()
+//        }
+        path.append(.stationSelection(field: field, city: city))
     }
     
-    func didSelectStation(_ station: String, in city: City, for field: CityField) {
-        let displayText = "\(city.name), \(station)"
-        fromCity = displayText
+    func didSelectStation(for field: CityField, in city: City, _ station: Station) {
+        let displayText = "\(city.name) (\(station.title))"
+        switch field {
+        case .from:
+            fromCity = displayText
+        case .to:
+            toCity = displayText
+        }
         path.removeAll()
     }
     

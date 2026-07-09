@@ -13,6 +13,7 @@ struct SearchBar: View {
                 HStack {
                     TextField(placeholder, text: $searchText)
                         .font(.system(size: 17))
+                        .foregroundColor(Color.blackWhite)
                         .padding(.leading, 8)
                         .autocorrectionDisabled(true)
                         .autocapitalization(.none)

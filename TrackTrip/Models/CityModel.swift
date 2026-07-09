@@ -1,9 +1,3 @@
-//
-//  CityModel.swift
-//  TrackTrip
-//
-//  Created by Kirill Maidanovich on 2026/7/8.
-//
 
 import Foundation
 

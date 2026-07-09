@@ -1,9 +1,3 @@
-//
-//  SwapButton.swift
-//  TrackTrip
-//
-//  Created by Kirill Maidanovich on 2026/7/7.
-//
 
 import SwiftUI
 

@@ -28,7 +28,7 @@ struct CitySelectionView: View {
                     } label: {
                         HStack {
                             Text(city.name)
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(.blackWhite)
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .font(.system(size: 14, weight: .bold))
@@ -39,6 +39,12 @@ struct CitySelectionView: View {
                 }
                 .listStyle(.plain)
             }
+        }
+        .navigationTitle("Выбор города")
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            print("CitySelectionView appeared")
+            try? await viewModel.loadCities()
         }
     }
 }

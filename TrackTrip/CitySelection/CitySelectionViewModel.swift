@@ -37,13 +37,24 @@ final class CitySelectionViewModel: ObservableObject {
                 for settlement in region.settlements ?? [] {
                     
                     guard let name = settlement.title else { continue }
+                    
                     var stations: [Station] = []
                     
                     for station in settlement.stations ?? [] {
-                        guard let title = station.title,
-                              let code = station.code else { continue }
+                        guard let title = station.title else { continue }
+                              
+                        let code = station.code
+                        ?? station.codes?.esr_code
+                        ?? station.codes?.yandex_code
+                        
+                        guard let code else { continue }
                         stations.append(Station(id: code, title: title, code: code))
                     }
+                    
+                    if name == "Москва" {
+                        print("stations after fix:", stations.count)   // теперь считает правильный локальный массив
+                    }
+                    
                     let id = settlement.codes?.yandex_code ?? name
                     
                     result.append(City(id: id, name: name, station: stations))
