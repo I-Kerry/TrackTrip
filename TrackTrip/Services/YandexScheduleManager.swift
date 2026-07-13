@@ -45,7 +45,7 @@ final class YandexScheduleManager {
     
     func testScheduleBetweenStations() async throws -> ScheduleBetweenStations {
         let service = ScheduleBetweenStationsService(apiKey: apiKey, client: client)
-        return try await service.getSchedualBetweenStations(from: "s9600396", to: "s9600213")
+        return try await service.getSchedualBetweenStations(from: "s9600396", to: "s9600213", transfers: false)
     }
     
     func testThread() async throws -> StationThread {

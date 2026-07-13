@@ -6,6 +6,9 @@ final class ViewModel: ObservableObject {
     @Published var fromCity: String = ""
     @Published var toCity: String = ""
     
+    @Published private(set) var fromStation: Station?
+    @Published private(set) var toStation: Station?
+    
     @Published var path: [Route] = []
     
     init() {
@@ -17,9 +20,12 @@ final class ViewModel: ObservableObject {
     }
     
     func SwapCities() {
-        let temp = fromCity
+        let tempCity = fromCity
+        let tempStation = fromStation
         fromCity = toCity
-        toCity = temp
+        toCity = tempCity
+        fromStation = toStation
+        toStation = tempStation
     }
     
     func selectFrom() {
@@ -48,13 +54,16 @@ final class ViewModel: ObservableObject {
         switch field {
         case .from:
             fromCity = displayText
+            fromStation = station
         case .to:
             toCity = displayText
+            toStation = station
         }
         path.removeAll()
     }
     
     func search() {
-        
+        guard let fromStation, let toStation else { return }
+        path.append(.carrierList(from: fromStation, to: toStation, fromTitle: fromCity, toTitle: toCity))
     }
 }

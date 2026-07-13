@@ -24,4 +24,5 @@ enum CityField: Hashable {
 enum Route: Hashable {
     case citySelection(field: CityField)
     case stationSelection(field: CityField, city: City)
+    case carrierList(from: Station, to: Station, fromTitle: String, toTitle: String)
 }

@@ -38,6 +38,8 @@ struct MainScreen: View {
                         StationSelectionView(field: field, city: city) { station in
                             viewModel.didSelectStation(for: field, in: city, station)
                         }
+                    case .carrierList(let fromStation, let toStation, let fromTitle, let toTitle):
+                        CarrierListView(fromStation: fromStation, toStation: toStation, fromTitle: fromTitle, toTitle: toTitle)
                     }
                 }
         }
