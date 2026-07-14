@@ -16,10 +16,13 @@ struct CitySelectionView: View {
             if viewModel.isLoading {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if let error = viewModel.error {
+                ErrorView(error: error)
+                
             } else if viewModel.filteredCities.isEmpty {
                 Text("Город не найден")
                     .font(.system(size: 24, weight: .bold))
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.blackWhite)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 List(viewModel.filteredCities) { city in
@@ -43,7 +46,6 @@ struct CitySelectionView: View {
         .navigationTitle("Выбор города")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            print("CitySelectionView appeared")
             try? await viewModel.loadCities()
         }
     }

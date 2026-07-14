@@ -10,7 +10,6 @@ struct SearchButton: View {
                 .font(.system(size: 17, weight: .bold))
                 .foregroundStyle(.white)
                 .frame(width: 150, height: 60)
-//                .padding(.vertical, 16)
                 .background(.blue)
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         }

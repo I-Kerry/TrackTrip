@@ -20,13 +20,21 @@ struct CarrierListView: View {
             if viewModel.isLoading {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if let errorMessage = viewModel.errorMessage{
-                Text(errorMessage)
+            } else if let error = viewModel.error {
+                ErrorView(error: error)
+
+            } else if viewModel.filteredTrips.isEmpty {
+                Text(ErrorString.noVariants)
+                    .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(.blackWhite)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 ScrollView {
                     LazyVStack(spacing: 12) {
+                        Text("\(fromTitle) → \(toTitle)")
+                            .font(.system(size: 24, weight: .bold))
+                            .frame(alignment: .leading)
+                            .foregroundStyle(Color.blackWhite)
+                            .padding(16)
                         ForEach(viewModel.filteredTrips) { trip in
                             CarrierListCell(trip: trip)
                         }
@@ -39,18 +47,11 @@ struct CarrierListView: View {
         .overlay(alignment: .bottom) {
             refineTimeButton
         }
-        .navigationTitle("\(fromTitle) → \(toTitle)")
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.loadTrips()
         }
-//        .sheet(isPresented: $isShowingFilters) {
-//            FilterView(filters: viewModel.filters) { filter in
-//                Task {
-//                    await viewModel.applyFilters(filter)
-//                }
-//            }
-//        }
+
         .navigationDestination(isPresented: $isShowingFilters) {
             FilterView(filters: viewModel.filters) { filter in
                 Task {

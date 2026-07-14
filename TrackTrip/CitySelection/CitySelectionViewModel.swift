@@ -6,6 +6,7 @@ final class CitySelectionViewModel: ObservableObject {
     @Published private var cities: [City] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    @Published var error: AppError?
     
     private let stationService: AllStationsProtocol
     
@@ -21,12 +22,14 @@ final class CitySelectionViewModel: ObservableObject {
     func loadCities() async throws {
         isLoading = true
         defer { isLoading = false }
+        error = nil
         
         do {
             let response = try await stationService.getAllStations()
             cities = map(response)
         } catch {
             errorMessage = "Не удалось загрузить города"
+            self.error = AppError.from(error)
         }
     }
     

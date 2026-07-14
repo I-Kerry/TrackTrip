@@ -6,7 +6,6 @@ class BaseService {
     
     init(apiKey: String, client: Client) {
         self.apiKey = apiKey
-//        self.client = client
         self.client = APIClient.shared
     }
 }

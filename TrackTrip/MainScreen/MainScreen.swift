@@ -2,6 +2,8 @@ import SwiftUI
 
 struct MainScreen: View {
     @ObservedObject private var viewModel: ViewModel
+    
+    @ObservedObject private var settingViewModel: SettingsViewModel
     init() {
         self.viewModel = ViewModel()
     }
@@ -10,6 +12,7 @@ struct MainScreen: View {
         TabView {
             NavigationStack(path: $viewModel.path) {
                 VStack(spacing: 0) {
+                    Spacer()
                     RouteCard(
                         fromText: viewModel.fromCity,
                         toText: viewModel.toCity,
@@ -47,7 +50,7 @@ struct MainScreen: View {
             .tabItem {
                 Image(systemName: "arrow.up.message.fill")
             }
-            Color.green
+            SettingsView(viewModel: settingViewModel)
                 .tabItem {
                     Image(systemName: "gearshape.fill")
                 }

@@ -10,7 +10,7 @@ struct CarrierListCell: View {
             timeline
         }
         .padding(16)
-        .background(Color(.secondarySystemGroupedBackground))
+        .background(.lightGrayBackground)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
     
@@ -20,6 +20,7 @@ struct CarrierListCell: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(trip.carrierTitle)
                     .font(.system(size: 17, weight: .regular))
+                    .foregroundStyle(.black)
                 if trip.hasTransfer, let city = trip.transferCityTitle {
                     Text("с пересадкой в \(city)")
                         .font(.system(size: 12, weight: .regular))
@@ -29,6 +30,7 @@ struct CarrierListCell: View {
             Spacer()
             Text(trip.dateText)
                 .font(.system(size: 12, weight: .regular))
+                .foregroundStyle(.black)
         }
     }
     
@@ -38,15 +40,20 @@ struct CarrierListCell: View {
                 HStack(spacing: 2) {
                     Text(trip.departureTime)
                         .font(.system(size: 17, weight: .regular))
+                        .foregroundStyle(.black)
                     Rectangle()
                         .frame(height: 1)
+                        .foregroundStyle(.black)
                     Text(trip.durationText)
                         .font(.system(size: 12, weight: .regular))
                         .lineLimit(1)
+                        .foregroundStyle(.black)
                     Rectangle()
                         .frame(height: 1)
+                        .foregroundStyle(.black)
                     Text(trip.arrivalTime)
                         .font(.system(size: 17, weight: .regular))
+                        .foregroundStyle(.black)
                 }
             }
             .frame(maxWidth: .infinity) 
@@ -58,7 +65,7 @@ struct CarrierListCell: View {
             image.resizable().scaledToFit()
         } placeholder : {
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.gray.opacity(0.3))
+                .fill(Color.gray)
         }
         .frame(width: 38, height: 38)
         .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -66,5 +73,15 @@ struct CarrierListCell: View {
 }
 
 #Preview {
-    CarrierListCell(trip: CarrierTrip(id: "1", carrierTitle: "PZD", carrierLogoURL: nil, dateText: "SEGODNYA", departureTime: "V CHAS", arrivalTime: "V DVA", durationText: "NU TOZHE CHAS", hasTransfer: true, transferCityTitle: "MOSKVA", timeOfDay: .day))
-}
+    CarrierListCell(trip: CarrierTrip(
+            id: "1",
+            carrierTitle: "Гранд Сервис Экспресс (Таврия)",
+            carrierLogoURL: nil,
+            dateText: "20 июля",
+            departureTime: "14:30",
+            arrivalTime: "09:15",
+            durationText: "18 часов",
+            hasTransfer: false,
+            transferCityTitle: nil,
+            timeOfDay: .day
+        ))}

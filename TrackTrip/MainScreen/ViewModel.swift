@@ -11,10 +11,6 @@ final class ViewModel: ObservableObject {
     
     @Published var path: [Route] = []
     
-    init() {
-        print("MainScreenViewModel init", ObjectIdentifier(self))
-    }
-    
     var isSearchShown: Bool {
         !fromCity.isEmpty && !toCity.isEmpty
     }
@@ -43,14 +39,12 @@ final class ViewModel: ObservableObject {
         case .to:
             toCity = city.name
         }
-//        if !path.isEmpty {
-//            path.removeLast()
-//        }
         path.append(.stationSelection(field: field, city: city))
     }
     
     func didSelectStation(for field: CityField, in city: City, _ station: Station) {
-        let displayText = "\(city.name) (\(station.title))"
+        let displayText = "\(station.title)"
+
         switch field {
         case .from:
             fromCity = displayText

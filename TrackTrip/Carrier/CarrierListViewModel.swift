@@ -1,10 +1,12 @@
 import Foundation
 import Combine
 
+@MainActor
+
 final class CarrierListViewModel: ObservableObject {
     @Published private(set) var trips: [CarrierTrip] = []
     @Published private(set) var isLoading: Bool = false
-    @Published var errorMessage: String?
+    @Published var error: AppError?
     @Published var filters: FilterOptions = .empty
     
     var fromStation: Station
@@ -23,32 +25,17 @@ final class CarrierListViewModel: ObservableObject {
         return trips.filter { filters.selectedTimes.contains($0.timeOfDay)}
     }
     
-//    var filteredTrips: [CarrierTrip] {
-//        trips.filter { trip in
-//            let matchesTime = filters.selectedTimes.isEmpty || filters.selectedTimes.contains(trip.timeOfDay)
-//            
-//            let matchesTransfer: Bool
-//            
-//            switch filters.showTransfers {
-//            case nil: matchesTransfer = true
-//            case .some(true): matchesTransfer = true
-//            case .some(false): matchesTransfer = !trip.hasTransfer
-//            }
-//            
-//            return matchesTime && matchesTransfer
-//        }
-//    }
-    
     func loadTrips() async {
         isLoading = true
         
         defer { isLoading = false }
+        error = nil
         
         do {
             let response = try await scheduleService.getSchedualBetweenStations(from: fromStation.code, to: toStation.code, transfers: filters.showTransfers)
             trips = map(response)
         } catch {
-            errorMessage = "Вариантов нет"
+            self.error = AppError.from(error)
         }
     }
     
@@ -60,14 +47,25 @@ final class CarrierListViewModel: ObservableObject {
     func map(_ response: ScheduleBetweenStations) -> [CarrierTrip] {
         var result: [CarrierTrip] = []
         
-        for segment in response.segments ?? [] {
-            guard
-                let carrierTitle = segment.thread?.carrier?.title,
-                let departure = segment.departure,
-                let arrival = segment.arrival,
-                let departureDate = ISO8601DateFormatter().date(from: departure)
-            else { continue
+        guard let segments = response.segments else {
+            return [] }
+        
+        for (index, segment) in segments.enumerated() {
+            
+            let carrierTitle = segment.thread?.carrier?.title.flatMap { $0.isEmpty ? nil : $0 }
+            ?? segment.thread?.title
+            ?? ""
+            
+            guard let departure = segment.departure else {
+                continue
             }
+            guard let arrival = segment.arrival else {
+                continue
+            }
+            guard let departureDate = parseDate(from: departure) else {
+                continue
+            }
+            
             let hour = Calendar.current.component(.hour, from: departureDate)
             
             result.append(CarrierTrip(
@@ -82,12 +80,35 @@ final class CarrierListViewModel: ObservableObject {
                 transferCityTitle: nil,
                 timeOfDay: .from(hour: hour)))
         }
-        
         return result
     }
     
+    private func parseDate(from string: String) -> Date? {
+        if let date = ISO8601DateFormatter().date(from: string) {
+            return date
+        }
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.locale = Locale(identifier: "en_US_POSIX")
+        timeFormatter.dateFormat = "HH:mm:ss"
+        
+        if let timeDate = timeFormatter.date(from: string) {
+            let current = Calendar.current
+            let today = Date()
+            var components = current.dateComponents([.hour, .minute, .second], from: timeDate)
+            components.year = current.component(.year, from: today)
+            components.month = current.component(.month, from: today)
+            components.day = current.component(.day, from: today)
+            return current.date(from: components)
+        }
+        
+        return nil
+    }
+    
     func formattedTime(from iso: String) -> String? {
-        guard let date = ISO8601DateFormatter().date(from: iso) else { return nil }
+        guard let date = parseDate(from: iso) else {
+            return nil
+        }
         return CarrierListViewModel.timeFormatter.string(from: date)
     }
     
