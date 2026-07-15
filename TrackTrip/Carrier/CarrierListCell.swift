@@ -74,14 +74,14 @@ struct CarrierListCell: View {
 
 #Preview {
     CarrierListCell(trip: CarrierTrip(
-            id: "1",
-            carrierTitle: "Гранд Сервис Экспресс (Таврия)",
-            carrierLogoURL: nil,
-            dateText: "20 июля",
-            departureTime: "14:30",
-            arrivalTime: "09:15",
-            durationText: "18 часов",
-            hasTransfer: false,
-            transferCityTitle: nil,
-            timeOfDay: .day
-        ))}
+        id: "1",
+        carrierTitle: "Гранд Сервис Экспресс (Таврия)",
+        carrierLogoURL: nil,
+        dateText: "20 июля",
+        departureTime: "14:30",
+        arrivalTime: "09:15",
+        durationText: "18 часов",
+        hasTransfer: false,
+        transferCityTitle: nil,
+        timeOfDay: .day
+    ))}

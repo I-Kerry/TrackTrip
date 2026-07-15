@@ -80,8 +80,7 @@ struct CarrierListView: View {
             .background(Color.blue)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
+        .padding([.horizontal, .bottom], 16)
         .toolbar(.hidden, for: .tabBar)
     }
 }

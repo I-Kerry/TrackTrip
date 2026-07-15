@@ -32,7 +32,7 @@ final class CarrierListViewModel: ObservableObject {
         error = nil
         
         do {
-            let response = try await scheduleService.getSchedualBetweenStations(from: fromStation.code, to: toStation.code, transfers: filters.showTransfers)
+            let response = try await scheduleService.getScheduleBetweenStations(from: fromStation.code, to: toStation.code, transfers: filters.showTransfers)
             trips = map(response)
         } catch {
             self.error = AppError.from(error)
