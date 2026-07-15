@@ -48,6 +48,7 @@ struct CitySelectionView: View {
         .task {
             try? await viewModel.loadCities()
         }
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

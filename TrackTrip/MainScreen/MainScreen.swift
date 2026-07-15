@@ -4,8 +4,17 @@ struct MainScreen: View {
     @ObservedObject private var viewModel: ViewModel
     
     @ObservedObject private var settingViewModel: SettingsViewModel
+    
     init() {
         self.viewModel = ViewModel()
+        self.settingViewModel = SettingsViewModel()
+        
+//        let appearance = UITabBarAppearance()
+//        appearance.stackedLayoutAppearance.selected.iconColor = UIColor(Color.blackWhite)
+//        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.grayUni
+//        
+//        UITabBar.appearance().standardAppearance = appearance
+//        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
     
     var body: some View {
@@ -55,7 +64,6 @@ struct MainScreen: View {
                     Image(systemName: "gearshape.fill")
                 }
         }
-        .foregroundStyle(.whiteBlack)
     }
 }
 

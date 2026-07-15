@@ -82,6 +82,7 @@ struct CarrierListView: View {
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 16)
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

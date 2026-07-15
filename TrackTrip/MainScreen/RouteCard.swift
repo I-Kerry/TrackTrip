@@ -37,5 +37,5 @@ struct RouteCard: View {
 }
 
 #Preview {
-    RouteCard(fromText: "Irkutsk", toText: "Dream", swap: {}, chooseCityFrom: {}, chooseCityTo: {})
+    RouteCard(fromText: "", toText: "", swap: {}, chooseCityFrom: {}, chooseCityTo: {})
 }

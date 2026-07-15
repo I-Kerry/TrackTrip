@@ -11,7 +11,7 @@ struct ReusableChooseButton: View {
             HStack {
                 Text(text.isEmpty ? placeholder : text)
                     .font(.system(size: 17, weight: .regular))
-                    .foregroundStyle(text.isEmpty ? Color(.placeholderText) : .black)
+                    .foregroundStyle(text.isEmpty ? Color(.gray) : .black)
                 Spacer()
             }
             .padding(.horizontal, 8)
@@ -23,5 +23,5 @@ struct ReusableChooseButton: View {
 }
 
 #Preview {
-    ReusableChooseButton(placeholder: "lox", text: "Ne Lox", action: {})
+    ReusableChooseButton(placeholder: "", text: "", action: {})
 }

@@ -39,5 +39,6 @@ struct StationSelectionView: View {
         }
         .navigationTitle("Выбор станции")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
     }
 }
