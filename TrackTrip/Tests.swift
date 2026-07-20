@@ -1,22 +1,8 @@
-import SwiftUI
+
+import Foundation
 import OpenAPIURLSession
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-        .onAppear {
-            testFetchStations()
-        }
-    }
-    
-//    MARK: testFetchStations
-    
+class Tests {
     func testFetchStations() {
         Task {
             do {
@@ -43,8 +29,3 @@ struct ContentView: View {
         }
     }
 }
-
-#Preview {
-    ContentView()
-}
-
