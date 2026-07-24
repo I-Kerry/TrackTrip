@@ -23,10 +23,6 @@ struct SettingsView: View {
                         } label: {
                             HStack {
                                 Text("Пользовательское соглашение").font(.system(size: 17, weight: .regular)).foregroundStyle(.blackWhite)
-//                                Spacer()
-//                                Image(systemName: "chevron.right")
-//                                    .font(.system(size: 24, weight: .bold))
-//                                    .foregroundColor(Color.blackWhite)
                             }
                         }
                     }
