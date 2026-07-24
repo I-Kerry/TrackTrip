@@ -8,20 +8,16 @@ struct MainScreen: View {
     init() {
         self.viewModel = ViewModel()
         self.settingViewModel = SettingsViewModel()
-        
-//        let appearance = UITabBarAppearance()
-//        appearance.stackedLayoutAppearance.selected.iconColor = UIColor(Color.blackWhite)
-//        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.grayUni
-//        
-//        UITabBar.appearance().standardAppearance = appearance
-//        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
     
     var body: some View {
         TabView {
             NavigationStack(path: $viewModel.path) {
-                VStack(spacing: 0) {
-                    Spacer()
+                VStack {
+                    StoriesListView()
+                        .padding(.top, 24)
+                        .padding(.bottom, 20)
+                    
                     RouteCard(
                         fromText: viewModel.fromCity,
                         toText: viewModel.toCity,

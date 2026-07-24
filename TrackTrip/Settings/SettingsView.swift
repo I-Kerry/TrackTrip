@@ -6,16 +6,53 @@ struct SettingsView: View {
     @ObservedObject var viewModel: SettingsViewModel
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
-                
-                Text("Темная тема")
-                    .foregroundStyle(.blackWhite)
-                Text("Пользовательское соглашение")
-                    .foregroundStyle(.blackWhite)
-
-                Spacer()
+            ZStack {
+                VStack(spacing: 0) {
+                    List {
+                        HStack(alignment: .top, spacing: 20) {
+                            Text("Темная тема").font(.system(size: 17, weight: .regular)).foregroundStyle(.blackWhite)
+                            Spacer()
+                            Toggle("", isOn: $viewModel.isDarkMode)
+                                .labelsHidden()
+                                .onChange(of: viewModel.isDarkMode) { viewModel.toggleDarkMode($0) }
+                        }
+                        
+                        
+                        NavigationLink {
+                            CopyrightView(copyright: viewModel.copyright)
+                        } label: {
+                            HStack {
+                                Text("Пользовательское соглашение").font(.system(size: 17, weight: .regular)).foregroundStyle(.blackWhite)
+//                                Spacer()
+//                                Image(systemName: "chevron.right")
+//                                    .font(.system(size: 24, weight: .bold))
+//                                    .foregroundColor(Color.blackWhite)
+                            }
+                        }
+                    }
+                    .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .listRowSeparator(.hidden)
+                    .listSectionSeparator(.hidden)
+                    .background(Color.clear)
+                    Spacer()
+                    
+                    VStack(alignment: .center, spacing: 16) {
+                        Text("Приложение использует API «Яндекс.Расписания»")
+                            .font(.system(size: 12, weight: .regular)).foregroundStyle(.blackWhite)
+                        Text("Версия 1.0 (beta)")
+                            .font(.system(size: 12, weight: .regular)).foregroundStyle(.blackWhite)
+                    }
+                    .padding(.bottom, 24)
+                    .padding(.horizontal, 16)
+                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .task {
+                await viewModel.loadCopyright()
+            }
         }
     }
+}
+#Preview {
+    SettingsView(viewModel: SettingsViewModel())
 }
