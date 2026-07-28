@@ -19,9 +19,9 @@ struct CopyrightView: View {
             }
             .padding(16)
         }
-            .navigationTitle("Пользовательское соглашение")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar(.hidden, for: .tabBar)
+        .navigationTitle("Пользовательское соглашение")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
     }
-        
+    
 }

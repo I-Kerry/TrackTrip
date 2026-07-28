@@ -47,8 +47,10 @@ struct CarrierInfoView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .padding([.top, .bottom], 16)
-            .padding(.horizontal, 16)
+//            .padding([.top, .bottom], 16)
+//            .padding(.vertical, 16)
+//            .padding(.horizontal, 16)
+            .padding(16)
             
             List {
                 if let email = carrier.email, !email.isEmpty {

@@ -8,3 +8,8 @@ enum ApiKey {
 enum ErrorString {
     static let noVariants = "Вариантов нет"
 }
+
+enum DarkModeStrings {
+    static let isDarkMode = "isDarkMode"
+    static let hasUserChosenTheme = "hasUserChosenTheme"
+}
