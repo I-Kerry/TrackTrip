@@ -75,7 +75,7 @@ struct CarrierListCell: View {
 #Preview {
     CarrierListCell(trip: CarrierTrip(
         id: "1",
-        carrierTitle: "Гранд Сервис Экспресс (Таврия)",
+        carrierTitle: "Гранд Сервис Экспресс (Таврия)", carrierCode: nil,
         carrierLogoURL: nil,
         dateText: "20 июля",
         departureTime: "14:30",

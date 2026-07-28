@@ -71,6 +71,7 @@ final class CarrierListViewModel: ObservableObject {
             result.append(CarrierTrip(
                 id: segment.thread?.uid ?? UUID().uuidString,
                 carrierTitle: carrierTitle,
+                carrierCode: segment.thread?.carrier?.code,
                 carrierLogoURL: segment.thread?.carrier?.logo.flatMap(URL.init(string:)),
                 dateText: CarrierListViewModel.dateFormatter.string(from: departureDate),
                 departureTime: CarrierListViewModel.timeFormatter.string(from: departureDate),

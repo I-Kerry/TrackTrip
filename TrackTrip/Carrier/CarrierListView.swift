@@ -5,6 +5,7 @@ struct CarrierListView: View {
     
     @StateObject private var viewModel: CarrierListViewModel
     @State private var isShowingFilters: Bool = false
+    @State private var selectedCarrierCode: Int?
     
     let fromTitle: String
     let toTitle: String
@@ -36,7 +37,12 @@ struct CarrierListView: View {
                             .foregroundStyle(Color.blackWhite)
                             .padding(16)
                         ForEach(viewModel.filteredTrips) { trip in
-                            CarrierListCell(trip: trip)
+                            Button {
+                                selectedCarrierCode = trip.carrierCode
+                            } label: {
+                                CarrierListCell(trip: trip)
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
                     .padding(16)
@@ -58,6 +64,10 @@ struct CarrierListView: View {
                     await viewModel.applyFilters(filter)
                 }
             }
+        }
+        
+        .navigationDestination(item: $selectedCarrierCode) { code in
+            CarrierInfoView(carrierCode: code)
         }
     }
     
