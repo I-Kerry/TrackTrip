@@ -5,11 +5,11 @@ import Foundation
 
 typealias AllStations = Components.Schemas.AllStationsResponse
 
-protocol AllStationsProtocol {
+protocol AllStationsProtocol: Sendable {
     func getAllStations() async throws -> AllStations
 }
 
-final class AllStationsService: BaseService, AllStationsProtocol {
+final class AllStationsService: BaseService, AllStationsProtocol, @unchecked Sendable {
     
     func getAllStations() async throws -> AllStations {
         let response = try await client.getAllStations(query: .init(apikey: apiKey))

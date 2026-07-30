@@ -1,13 +1,16 @@
-import Foundation
 import SwiftUI
-import Combine
 
-final class SettingsViewModel: ObservableObject {
-    @Published private(set) var copyright: Copyright?
-    @Published private(set) var isLoading: Bool = false
-    @Published var error: AppError?
-    @AppStorage("isDarkMode") var isDarkMode = false
-    @AppStorage("hasUserChosenTheme") var hasUserChosenTheme = false
+@MainActor
+@Observable
+final class SettingsViewModel {
+    private(set) var copyright: Copyright?
+    private(set) var isLoading: Bool = false
+    private var error: AppError?
+    
+    @ObservationIgnored
+    @AppStorage(DarkModeStrings.isDarkMode) var isDarkMode = false
+    @ObservationIgnored
+    @AppStorage(DarkModeStrings.hasUserChosenTheme) var hasUserChosenTheme = false
     
     private var copyrightService: CopyrightServiceProtocol
     

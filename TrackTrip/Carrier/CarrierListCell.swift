@@ -21,8 +21,8 @@ struct CarrierListCell: View {
                 Text(trip.carrierTitle)
                     .font(.system(size: 17, weight: .regular))
                     .foregroundStyle(.black)
-                if trip.hasTransfer, let city = trip.transferCityTitle {
-                    Text("с пересадкой в \(city)")
+                if trip.hasTransfer {
+                    Text(trip.transferCityTitle.map { "с пересадкой в \($0)" } ?? "с пересадкой")
                         .font(.system(size: 12, weight: .regular))
                         .foregroundStyle(.red)
                 }

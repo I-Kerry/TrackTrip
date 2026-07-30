@@ -3,7 +3,7 @@ import SwiftUI
 struct MainScreen: View {
     @ObservedObject private var viewModel: ViewModel
     
-    @ObservedObject private var settingViewModel: SettingsViewModel
+    @State private var settingViewModel: SettingsViewModel
     
     init() {
         self.viewModel = ViewModel()

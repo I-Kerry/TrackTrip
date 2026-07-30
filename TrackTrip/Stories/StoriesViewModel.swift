@@ -2,6 +2,8 @@
 import SwiftUI
 import Combine
 
+@MainActor
+
 final class StoriesViewModel: ObservableObject {
     @Published var stories: [StoryModel]
     @Published var currentStoryIndex: Int = 0

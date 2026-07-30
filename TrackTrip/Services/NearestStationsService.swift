@@ -4,11 +4,11 @@ import OpenAPIURLSession
 
 typealias NearestStations = Components.Schemas.Stations
 
-protocol NearestStationsServiceProtocol {
+protocol NearestStationsServiceProtocol: Sendable {
     func getNearestStations(lat: Double, lng: Double, distance: Int) async throws -> NearestStations
 }
 
-final class NearestStationsService: BaseService, NearestStationsServiceProtocol {
+final class NearestStationsService: BaseService, NearestStationsServiceProtocol, @unchecked Sendable {
 
     func getNearestStations(lat: Double, lng: Double, distance: Int) async throws -> NearestStations {
         let response = try await client.getNearestStations(query: .init(apikey: apiKey,

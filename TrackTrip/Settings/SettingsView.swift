@@ -1,9 +1,8 @@
 
 import SwiftUI
-import Combine
 
 struct SettingsView: View {
-    @ObservedObject var viewModel: SettingsViewModel
+    @State var viewModel: SettingsViewModel
     var body: some View {
         NavigationStack {
             ZStack {
@@ -12,9 +11,9 @@ struct SettingsView: View {
                         HStack(alignment: .top, spacing: 20) {
                             Text("Темная тема").font(.system(size: 17, weight: .regular)).foregroundStyle(.blackWhite)
                             Spacer()
-                            Toggle("", isOn: $viewModel.isDarkMode)
+                            Toggle("", isOn: $viewModel.isDarkMode.animation(.easeInOut(duration: 0.3)))
                                 .labelsHidden()
-                                .onChange(of: viewModel.isDarkMode) { viewModel.toggleDarkMode($0) }
+                                .onChange(of: viewModel.isDarkMode) { _, newValue in viewModel.toggleDarkMode(newValue) }
                         }
                         
                         
@@ -49,6 +48,4 @@ struct SettingsView: View {
         }
     }
 }
-#Preview {
-    SettingsView(viewModel: SettingsViewModel())
-}
+
