@@ -24,7 +24,7 @@ final class CarrierInfoViewModel: ObservableObject {
         error = nil
         
         do {
-            let response = try await carrierService.getCarrierInfo(code: String(carrierCode))
+//            _ = try await carrierService.getCarrierInfo(code: String(carrierCode))
             carrier = try await carrierService.getCarrierInfo(code: String(carrierCode))
         } catch {
             self.error = AppError.from(error)

@@ -2,7 +2,7 @@
 import Foundation
 import OpenAPIURLSession
 
-final class YandexScheduleManager {
+final class YandexScheduleManager: Sendable {
     private let apiKey: String
     private let client: Client
     

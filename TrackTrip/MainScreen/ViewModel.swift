@@ -2,6 +2,8 @@
 import Foundation
 import Combine
 
+@MainActor
+
 final class ViewModel: ObservableObject {
     @Published var fromCity: String = ""
     @Published var toCity: String = ""

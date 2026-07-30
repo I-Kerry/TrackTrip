@@ -24,6 +24,7 @@ struct CarrierInfoView: View {
         .task {
             await viewModel.loadCarrier()
         }
+        .navigationTitle("Информация о перевозчике").font(.system(size: 17, weight: .bold))
     }
     
     private func content(for carrier: Carrier) -> some View {
@@ -82,7 +83,5 @@ struct CarrierInfoView: View {
                     .foregroundStyle(.blue)
             }
         }
-        
-        .navigationTitle("Информация о перевозчике").font(.system(size: 17, weight: .bold))
     }
 }

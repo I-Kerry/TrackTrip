@@ -50,7 +50,7 @@ final class CarrierListViewModel: ObservableObject {
         guard let segments = response.segments else {
             return [] }
         
-        for (index, segment) in segments.enumerated() {
+        for (_, segment) in segments.enumerated() {
             
             let carrierTitle = segment.thread?.carrier?.title.flatMap { $0.isEmpty ? nil : $0 }
             ?? segment.thread?.title

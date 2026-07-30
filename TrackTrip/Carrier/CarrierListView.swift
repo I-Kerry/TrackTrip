@@ -18,6 +18,11 @@ struct CarrierListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            Text("\(fromTitle) → \(toTitle)")
+                .font(.system(size: 24, weight: .bold))
+                .frame(alignment: .leading)
+                .foregroundStyle(Color.blackWhite)
+                .padding(16)
             if viewModel.isLoading {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -28,14 +33,15 @@ struct CarrierListView: View {
                 Text(ErrorString.noVariants)
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(.blackWhite)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 ScrollView {
                     LazyVStack(spacing: 12) {
-                        Text("\(fromTitle) → \(toTitle)")
-                            .font(.system(size: 24, weight: .bold))
-                            .frame(alignment: .leading)
-                            .foregroundStyle(Color.blackWhite)
-                            .padding(16)
+//                        Text("\(fromTitle) → \(toTitle)")
+//                            .font(.system(size: 24, weight: .bold))
+//                            .frame(alignment: .leading)
+//                            .foregroundStyle(Color.blackWhite)
+//                            .padding(16)
                         ForEach(viewModel.filteredTrips) { trip in
                             Button {
                                 selectedCarrierCode = trip.carrierCode

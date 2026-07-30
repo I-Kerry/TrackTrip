@@ -1,10 +1,12 @@
 import SwiftUI
 
+@MainActor
 @Observable
 final class SettingsViewModel {
     private(set) var copyright: Copyright?
     private(set) var isLoading: Bool = false
-    var error: AppError?
+    private var error: AppError?
+    
     @ObservationIgnored
     @AppStorage(DarkModeStrings.isDarkMode) var isDarkMode = false
     @ObservationIgnored

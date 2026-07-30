@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 
+@MainActor
 final class CitySelectionViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published private var cities: [City] = []
@@ -8,9 +9,12 @@ final class CitySelectionViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var error: AppError?
     
+    private static var cachedCities: [City]?
+    private static var ongoingTask: Task<[City], Error>?
+    
     private let stationService: AllStationsProtocol
     
-    init(stationService: AllStationsProtocol = AllStationsService(apiKey: ApiKey.apikey, client: APIClient.shared)) {
+    init(stationService: AllStationsProtocol = Services.allStations) {
         self.stationService = stationService
     }
     
@@ -20,20 +24,41 @@ final class CitySelectionViewModel: ObservableObject {
     }
     
     func loadCities() async throws {
+        print("cache:", Self.cachedCities?.count ?? -1)
+
+        if let cached = Self.cachedCities {
+            cities = cached
+            return
+        }
+        
+        if let task = Self.ongoingTask {
+            cities = try await task.value
+            return
+        }
+        
         isLoading = true
         defer { isLoading = false }
         error = nil
         
-        do {
+        let task = Task<[City], Error> { [stationService] in
             let response = try await stationService.getAllStations()
-            cities = map(response)
+            return CitySelectionViewModel.map(response)
+        }
+        
+        Self.ongoingTask = task
+        defer { Self.ongoingTask = nil }
+        
+        do {
+            let result = try await task.value
+            Self.cachedCities = result
+            cities = result
         } catch {
             errorMessage = "Не удалось загрузить города"
             self.error = AppError.from(error)
         }
     }
     
-    private func map(_ response: AllStations) -> [City] {
+    private static func map(_ response: AllStations) -> [City] {
         var result: [City] = []
         for country in response.countries ?? [] {
             for region in country.regions ?? [] {
