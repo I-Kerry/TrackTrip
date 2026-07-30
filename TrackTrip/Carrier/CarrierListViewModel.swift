@@ -8,7 +8,8 @@ final class CarrierListViewModel: ObservableObject {
     @Published private(set) var isLoading: Bool = false
     @Published var error: AppError?
     @Published var filters: FilterOptions = .empty
-    
+    @Published var selectedDate: Date = Date()
+
     var fromStation: Station
     var toStation: Station
     
@@ -32,8 +33,10 @@ final class CarrierListViewModel: ObservableObject {
         error = nil
         
         do {
-            let response = try await scheduleService.getScheduleBetweenStations(from: fromStation.code, to: toStation.code, transfers: filters.showTransfers)
+            let response = try await scheduleService.getScheduleBetweenStations(from: fromStation.code, to: toStation.code, date: selectedDate, transfers: filters.showTransfers ?? true)
+            print("total:", response.pagination?.total ?? -1, "segments:", response.segments?.count ?? -1)
             trips = map(response)
+            print("mapped trips:", trips.count)
         } catch {
             self.error = AppError.from(error)
         }
@@ -72,16 +75,25 @@ final class CarrierListViewModel: ObservableObject {
                 id: segment.thread?.uid ?? UUID().uuidString,
                 carrierTitle: carrierTitle,
                 carrierCode: segment.thread?.carrier?.code,
-                carrierLogoURL: segment.thread?.carrier?.logo.flatMap(URL.init(string:)),
+                carrierLogoURL: logoURL(from: segment.thread?.carrier?.logo),
                 dateText: CarrierListViewModel.dateFormatter.string(from: departureDate),
                 departureTime: CarrierListViewModel.timeFormatter.string(from: departureDate),
                 arrivalTime: formattedTime(from: arrival) ?? "",
                 durationText: durationText(seconds: segment.duration),
-                hasTransfer: false,
+                hasTransfer: segment.has_transfers ?? false,
                 transferCityTitle: nil,
                 timeOfDay: .from(hour: hour)))
         }
         return result
+    }
+    
+    private func logoURL(from string: String?) -> URL? {
+        guard let string,
+              string.isEmpty else { return nil }
+        if string.hasPrefix("//") {
+            return URL(string: "https:" + string)
+        }
+        return URL(string: string)
     }
     
     private func parseDate(from string: String) -> Date? {
@@ -89,20 +101,16 @@ final class CarrierListViewModel: ObservableObject {
             return date
         }
         
-        let timeFormatter = DateFormatter()
-        timeFormatter.locale = Locale(identifier: "en_US_POSIX")
-        timeFormatter.dateFormat = "HH:mm:ss"
+        let formats = ["yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss"]
         
-        if let timeDate = timeFormatter.date(from: string) {
-            let current = Calendar.current
-            let today = Date()
-            var components = current.dateComponents([.hour, .minute, .second], from: timeDate)
-            components.year = current.component(.year, from: today)
-            components.month = current.component(.month, from: today)
-            components.day = current.component(.day, from: today)
-            return current.date(from: components)
+        for _ in formats {
+            let timeFormatter = DateFormatter()
+            timeFormatter.locale = Locale(identifier: "en_US_POSIX")
+            timeFormatter.dateFormat = "HH:mm:ss"
+            if let date = timeFormatter.date(from: string) {
+                return date
+            }
         }
-        
         return nil
     }
     

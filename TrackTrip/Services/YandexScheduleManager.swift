@@ -45,7 +45,7 @@ final class YandexScheduleManager: Sendable {
     
     func testScheduleBetweenStations() async throws -> ScheduleBetweenStations {
         let service = ScheduleBetweenStationsService(apiKey: apiKey, client: client)
-        return try await service.getScheduleBetweenStations(from: "s9600396", to: "s9600213", transfers: false)
+        return try await service.getScheduleBetweenStations(from: "s9600396", to: "s9600213", date: Date(), transfers: true)
     }
     
     func testThread() async throws -> StationThread {

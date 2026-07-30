@@ -37,11 +37,6 @@ struct CarrierListView: View {
             } else {
                 ScrollView {
                     LazyVStack(spacing: 12) {
-//                        Text("\(fromTitle) → \(toTitle)")
-//                            .font(.system(size: 24, weight: .bold))
-//                            .frame(alignment: .leading)
-//                            .foregroundStyle(Color.blackWhite)
-//                            .padding(16)
                         ForEach(viewModel.filteredTrips) { trip in
                             Button {
                                 selectedCarrierCode = trip.carrierCode

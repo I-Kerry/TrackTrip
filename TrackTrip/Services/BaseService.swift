@@ -6,7 +6,6 @@ class BaseService: @unchecked Sendable {
     
     init(apiKey: String, client: Client) {
         self.apiKey = apiKey
-//        self.client = APIClient.shared
         self.client = client
     }
 }
